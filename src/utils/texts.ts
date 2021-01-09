@@ -12,3 +12,5 @@ export function t001(lang: Langs, eventInstance: EventInstance, eventName: Event
       return `> Evento ${eventName} carregado com sucesso! (${eventInstance})`;
   };
 };
+
+export function t001

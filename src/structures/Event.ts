@@ -18,7 +18,7 @@ export interface AllEvents {
 };
 
 export type EventInstance = keyof AllEvents;
-export type EventName<K extends EventInstance> = keyof AllEvents[K];
+export type EventName<K extends EventInstance> = K extends 'discord_client' ? keyof ClientEvents : keyof ProcessEvents;
 //@ts-ignore
 export type EventRun<K extends EventInstance, E extends EventName<K>> = (client: NewClient, ...params: AllEvents[K][E]) => void;
 

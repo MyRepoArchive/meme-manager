@@ -13,14 +13,14 @@ readdirSync('./src/events')
 
     switch (event.instance) {
       case 'discord_client':
-        //@ts-ignore
-        client.on(event.name, (...params) => event.run(client, ...params));
-        console.log(t001(client.lang, event.instance, event.name));
+        const clientEvent = (await import(`./events/${eventFolder}`)).event as Event<'discord_client', EventName<'discord_client'>>
+        client.on(clientEvent.name, (...params) => clientEvent.run(client, ...params));
+        console.log(t001(client.lang, clientEvent.instance, clientEvent.name));
         break;
       case 'node_process':
-        //@ts-ignore
-        process.on(event.name, (...params) => event.run(client, ...params));
-        console.log(t001(client.lang, event.instance, event.name));
+        const processEvent = (await import(`./events/${eventFolder}`)).event as Event<'node_process', EventName<'node_process'>>
+        process.on(processEvent.name, (...params) => processEvent.run(client, ...params as any));
+        console.log(t001(client.lang, processEvent.instance, processEvent.name));
         break;
     };
   });
