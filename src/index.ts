@@ -1,34 +1,19 @@
 import { config } from 'dotenv';
-import { readdirSync } from 'fs';
-import { Event, EventInstance, EventName, ProcessEvents } from './structures/Event';
+import { connect, connection } from 'mongoose';
+import { eventHandler } from './config/handlers/events';
+import { guild } from './models/Guilds';
 import { NewClient } from './structures/NewClient';
-import { t001 } from './utils/texts';
 config();
 
-const client = new NewClient('pt-br');
+connect('mongodb://localhost/meme-manager', { useNewUrlParser: true, useUnifiedTopology: true });
 
-readdirSync('./src/events')
-  .forEach(async (eventFolder) => {
-    const { event } = await import(`./events/${eventFolder}`) as { event: Event<EventInstance, EventName<EventInstance>> };
+connection.on('error', (error) => console.error(`Connection error: ${error}`));
+connection.on('open', () => console.log(`Banco de dados conectado!`));
 
-    switch (event.instance) {
-      case 'discord_client':
-        const clientEvent = (await import(`./events/${eventFolder}`)).event as Event<'discord_client', EventName<'discord_client'>>
+guild
 
-        client.on(clientEvent.name, (...params) => clientEvent.run(client, ...params));
-        client.events.set(clientEvent.name, clientEvent);
+const client = new NewClient();
 
-        console.log(t001(client.lang, clientEvent.instance, clientEvent.name));
-        break;
-
-      case 'node_process':
-        const processEvent = (await import(`./events/${eventFolder}`)).event as Event<'node_process', EventName<'node_process'>>
-
-        process.on(processEvent.name, (...params) => processEvent.run(client, ...params as any));
-
-        console.log(t001(client.lang, processEvent.instance, processEvent.name));
-        break;
-    };
-  });
+eventHandler(client);
 
 client.login(process.env.TOKEN)
