@@ -1,6 +1,6 @@
 import { EventInstance, EventName } from "../structures/Event";
 import { Langs, NewClient } from "../structures/NewClient";
-import { client } from "./instaceClient";
+import { client } from "../config/instaceClient";
 
 /* Inicios de funcoes e seus significados; */
 // t: Textos que vão para terminal!

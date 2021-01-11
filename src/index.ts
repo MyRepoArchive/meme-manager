@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import mongoose from 'mongoose';
 import { eventHandler } from './config/handlers/events';
-import { client } from './utils/instaceClient';
+import { client } from './config/instaceClient';
 import { t003, t004 } from './utils/texts';
 
 config();
