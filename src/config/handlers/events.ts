@@ -1,32 +1,31 @@
 import { readdirSync } from "fs";
-import { Event, EventInstance, EventName } from "../../structures/Event";
+import { AllEvents, Event, EventInstance, EventName } from "../../structures/Event";
 import { NewClient } from "../../structures/NewClient";
 import { t001 } from "../../utils/texts";
 
 export function eventHandler(client: NewClient) {
   readdirSync('./src/events')
-  .forEach(async (eventFolder) => {
-    const { event } = await import(`../../events/${eventFolder}`) as { event: Event<EventInstance, EventName<EventInstance>> };
+    .forEach(async (eventFolder) => {
+      const { event } = await import(`../../events/${eventFolder}`) as { event: Event<EventInstance, EventName<EventInstance>> };
 
-    switch (event.instance) {
-      // Para carregar eventos do client do Discord!
-      case 'discord_client':
-        const clientEvent = (await import(`../../events/${eventFolder}`)).event as Event<'discord_client', EventName<'discord_client'>>
+      loadEvent(eventFolder, client, event.instance);
+    });
+};
 
-        client.on(clientEvent.name, (...params) => clientEvent.run(client, ...params));
-        client.events.set(clientEvent.name, clientEvent);
+export async function loadEvent<I extends EventInstance>(eventFolder: string, client: NewClient, instanceName: I) {
+  const localEvent = (await import(`../../events/${eventFolder}`)).event as Event<I, EventName<I>>
 
-        console.log(t001(clientEvent.instance, clientEvent.name));
-        break;
+  const instances = {
+    'discord_client': client,
+    'node_process': process
+  };
 
-      // Para carregar eventos de processo Node!
-      case 'node_process':
-        const processEvent = (await import(`../../events/${eventFolder}`)).event as Event<'node_process', EventName<'node_process'>>
+  //@ts-ignore
+  (instances[instanceName]).on(localEvent.name, (...params: AllEvents[I][EventName<I>]) => localEvent.run(client, ...params));
 
-        process.on(processEvent.name, (...params) => processEvent.run(client, ...params as any));
+  if (instanceName === 'discord_client') {
+    client.events.set(localEvent.name as EventName<'discord_client'>, localEvent as unknown as Event<'discord_client', EventName<'discord_client'>>);
+  };
 
-        console.log(t001(processEvent.instance, processEvent.name));
-        break;
-    };
-  });
-}
+  console.log(t001(localEvent.instance, localEvent.name));
+};

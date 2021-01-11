@@ -1,6 +1,7 @@
 import { EventInstance, EventName } from "../structures/Event";
 import { Langs, NewClient } from "../structures/NewClient";
 import { client } from "../config/instaceClient";
+import { Message } from "discord.js";
 
 /* Inicios de funcoes e seus significados; */
 // t: Textos que vão para terminal!
@@ -38,5 +39,23 @@ export function t004(error: any, lang: Langs = client.lang) {
       return `> Connection failed with the database: ${error}`;
     case 'pt-br':
       return `> Conexão falha com o banco de dados: ${error}`;
-  }
-}
+  };
+};
+
+export function t005(commandName: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `> Command ${commandName} loaded successfully!`;
+    case 'pt-br':
+      return `> Comando ${commandName} carregado com sucesso!`;
+  };
+};
+
+export function t006(commandName: string, erro: any, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `> There was an error executing the ${commandName} command: ${erro}`;
+    case 'pt-br':
+      return `> Houve um erro ao executar o comando ${commandName}: ${erro}`;
+  };
+};
