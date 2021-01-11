@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { client } from "../utils/instaceClient";
 
 const guildSchema = new Schema({
   guild_id: {
@@ -10,7 +11,8 @@ const guildSchema = new Schema({
   prefix: {
     type: String,
     required: true,
-    maxlength: 10
+    maxlength: 10,
+    default: client.defaultPrefix
   }
 });
 
