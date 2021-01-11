@@ -1,19 +1,18 @@
 import { config } from 'dotenv';
-import { connect, connection } from 'mongoose';
+import mongoose from 'mongoose';
 import { eventHandler } from './config/handlers/events';
-import { guild } from './models/Guilds';
-import { NewClient } from './structures/NewClient';
+import { client } from './utils/instaceClient';
+import { t003, t004 } from './utils/texts';
+
 config();
 
-connect('mongodb://localhost/meme-manager', { useNewUrlParser: true, useUnifiedTopology: true });
-
-connection.on('error', (error) => console.error(`Connection error: ${error}`));
-connection.on('open', () => console.log(`Banco de dados conectado!`));
-
-guild
-
-const client = new NewClient();
+// Config mongoose
+mongoose.connect('mongodb://localhost/meme-manager', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+  .then(
+    () => console.log(t003()), 
+    error => console.error(t004(error))
+  );
 
 eventHandler(client);
 
-client.login(process.env.TOKEN)
+client.login(process.env.TOKEN);

@@ -14,12 +14,6 @@ const guildSchema = new Schema({
   }
 });
 
-const guild = model('guilds', guildSchema);
+const Guild = model('guilds', guildSchema);
 
-const guild33 = new guild({ guild_id: '33', prefix: '!' });
-
-guild33.save();
-guild33.save();
-guild33.save();
-
-export { guild };
+export { Guild };
