@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { client } from "../utils/instaceClient";
+import { client } from "../config/instaceClient";
 
 const guildSchema = new Schema({
   guild_id: {
@@ -16,6 +16,21 @@ const guildSchema = new Schema({
   }
 });
 
-const Guild = model('guilds', guildSchema);
+const _Guild = model('guilds', guildSchema);
 
-export { Guild };
+export interface IGuild {
+  guild_id: string;
+  prefix?: string;
+};
+
+export interface IGuildDb<T = any> extends IGuild {
+  _id?: T;
+  __v?: number;
+  prefix: string; 
+}
+
+export class Guild extends _Guild {
+  constructor(params: IGuild) {
+    super(params);
+  };
+};
