@@ -19,7 +19,7 @@ export async function guildArgumentValidator(data: ValidatorData) {
 
     const guild = await getGuild(data.client, arg);
 
-    if (!guild) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+    if (!guild) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
     return guild;
 };

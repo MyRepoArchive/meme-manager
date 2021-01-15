@@ -19,7 +19,7 @@ export async function memberArgumentValidator(data: ValidatorData) {
 
     const member = data.message.mentions.members?.map(member => member)[data.mentionPosition || 0] || await getMember(data.message.guild!, arg);
 
-    if (!member) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+    if (!member) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
     return member;
 };

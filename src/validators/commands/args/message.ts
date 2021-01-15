@@ -19,7 +19,7 @@ export async function messageArgumentValidator(data: ValidatorData) {
 
     const message = await getMessage(data.message.channel, arg);
 
-    if (!message) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+    if (!message) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
     return message;
 };

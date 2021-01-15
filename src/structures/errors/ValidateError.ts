@@ -13,7 +13,7 @@ export type ValidateErrorMessages =
 export class ValidateError extends EError {
   props: any;
   
-  constructor(message?: ValidateErrorMessages, args?: any, props?: any, { log = false, important = false, client }: EErrorOptions = { log: false, important: false }) {
+  constructor(message?: ValidateErrorMessages, props?: any, args?: any, { log = false, important = false, client }: EErrorOptions = { log: false, important: false }) {
     super(message, args, { log, important, client });
     this.name = 'ValidateError';
     this.props = props;

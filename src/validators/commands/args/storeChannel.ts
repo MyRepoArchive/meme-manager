@@ -26,7 +26,7 @@ export async function storeChannelArgumentValidator(data: ValidatorData) {
     'store'
   ) as StoreChannel | undefined;
 
-  if (!storeChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+  if (!storeChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
   return storeChannel;
 };

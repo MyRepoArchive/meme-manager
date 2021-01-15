@@ -25,7 +25,7 @@ export async function channelArgumentValidator(data: ValidatorData) {
     arg,
   ) as GuildChannel | undefined;
 
-  if (!channel) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+  if (!channel) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
   return channel;
 };

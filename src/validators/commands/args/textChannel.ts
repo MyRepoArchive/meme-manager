@@ -26,7 +26,7 @@ export async function textChannelArgumentValidator(data: ValidatorData) {
     'text'
   ) as TextChannel | undefined;
 
-  if (!textChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+  if (!textChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
   return textChannel;
 };

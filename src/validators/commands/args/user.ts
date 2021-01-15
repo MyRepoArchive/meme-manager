@@ -20,7 +20,7 @@ export async function userArgumentValidator(data: ValidatorData) {
 
     const user: User | undefined = data.message.mentions.users?.map(user => user)[data.mentionPosition || 0] || await getUser(arg, data.client);
 
-    if (!user || (data.thisGuild && !data.message.guild!.member(user))) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+    if (!user || (data.thisGuild && !data.message.guild!.member(user))) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
     return user;
 };

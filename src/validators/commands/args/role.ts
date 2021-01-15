@@ -19,7 +19,7 @@ export async function roleArgumentValidator(data: ValidatorData) {
 
     const role = data.message.mentions.roles?.map(role => role)[data.mentionPosition || 0] || await getRole(data.message.guild!, arg);
 
-    if (!role) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+    if (!role) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
     return role;
 };

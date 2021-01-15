@@ -26,7 +26,7 @@ export async function categoryChannelArgumentValidator(data: ValidatorData) {
     'category'
   ) as CategoryChannel | undefined;
 
-  if (!categoryChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+  if (!categoryChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
   return categoryChannel;
 };

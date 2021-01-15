@@ -19,7 +19,7 @@ export async function eventArgumentValidator(data: ValidatorData) {
 
     const event = data.client.events.get(arg as EventName<'discord_client'>);
 
-    if (!event) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+    if (!event) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
     return event;
 };

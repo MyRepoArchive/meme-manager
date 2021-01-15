@@ -17,7 +17,7 @@ export async function emojiArgumentValidator(data: ValidatorData) {
 
   const emoji = getEmoji((data.thisGuild ? data.message.guild!.emojis : data.client.emojis), arg);
 
-  if (!emoji) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+  if (!emoji) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
   return emoji;
 };

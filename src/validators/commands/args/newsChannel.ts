@@ -26,7 +26,7 @@ export async function newsChannelArgumentValidator(data: ValidatorData) {
     'news'
   ) as NewsChannel | undefined;
 
-  if (!newsChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+  if (!newsChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
   return newsChannel;
 };

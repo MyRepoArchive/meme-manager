@@ -2,6 +2,7 @@ import { EventInstance, EventName } from "../structures/Event";
 import { Langs, NewClient } from "../structures/NewClient";
 import { client } from "../config/instaceClient";
 import { Message } from "discord.js";
+import { CommandArgsTypes } from "../structures/Command";
 
 /* Inicios de funcoes e seus significados; */
 // t: Textos que vão para terminal!
@@ -105,6 +106,78 @@ export function em002(messageContent: string, argName: string, argText: string, 
       return `Argument not found!\n\`\`\`\n${messageContent} <${argName}>: ${argText}\n\`\`\``;
     case 'pt-br':
       return `Argumento não encontrado!\n\`\`\`\n${messageContent} <${argName}>: ${argText}\n\`\`\``;
+  };
+};
+
+export function em003(argumentIndex: number | string, minCharacters: number, errorLength: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Argument (\`${argumentIndex}\`) is less than the minimum size (\`${minCharacters}\`)\n${errorLength}`;
+    case 'pt-br':
+      return `Argumento (\`${argumentIndex}\`) é menor que o tamanho minimo (\`${minCharacters}\`)\n${errorLength}`;
+  };
+};
+
+export function em004(type: keyof CommandArgsTypes, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `_A value of type \`${type}\` is expected_`;
+    case 'pt-br':
+      return `_Espera-se um valor de tipo \`${type}\`_`
+  };
+};
+
+export function em005(argumentIndex: number | string, maxCharacters: number, errorLength: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Argument(\`${argumentIndex}\`) is greater than the maximum size (\`${maxCharacters}\`)\n${errorLength}`;
+    case 'pt-br':
+      return `Argumento (\`${argumentIndex}\`) é maior que o tamanho máximo (\`${maxCharacters}\`)\n${errorLength}`;
+  };
+};
+
+export function em006(argumentIndex: number | string, lengthCharacters: number, errorLength: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Argument (\`${argumentIndex}\`) is not equal to the desired size (\`${lengthCharacters}\`)\n${errorLength}`;
+    case 'pt-br':
+      return `Argumento (\`${argumentIndex}\`) não é igual ao tamanho desejado (\`${lengthCharacters}\`)\n${errorLength}`;
+  };
+};
+
+export function em007(argumentIndex: number | string, notFound: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Argument (\`${argumentIndex}\`) not identified!\n${notFound}`;
+    case 'pt-br':
+      return `Argumento (\`${argumentIndex}\`) não identificado!\n${notFound}`;
+  };
+};
+
+export function em008(argumentIndex: number | string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Argument (\`${argumentIndex}\`) must be of type \`number\`!`;
+    case 'pt-br':
+      return `Argumento (\`${argumentIndex}\`) precisa ser do tipo \`número\`!`
+  };
+};
+
+export function em009(argumentIndex: number | string, max: number, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Argument (\`${argumentIndex}\`) is greater than the maximum (\`${max}\`)!`;
+    case 'pt-br':
+      return `Argumento (\`${argumentIndex}\`) é maior que o máximo (\`${max}\`)!`;
+  };
+};
+
+export function em010(argumentIndex: number | string, min: number, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Argument (\`${argumentIndex}\`) is less than the minimum (\`${min}\`)!`;
+    case 'pt-br':
+      return `Argumento (\`${argumentIndex}\`) é menor que o mínimo (\`${min}\`)!`;
   };
 };
 

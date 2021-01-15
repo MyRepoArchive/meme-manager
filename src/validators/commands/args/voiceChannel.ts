@@ -26,7 +26,7 @@ export async function voiceChannelArgumentValidator(data: ValidatorData) {
     'voice'
   ) as VoiceChannel | undefined;
 
-  if (!voiceChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+  if (!voiceChannel) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
   return voiceChannel;
 };

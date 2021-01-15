@@ -17,7 +17,7 @@ export async function commandArgumentValidator(data: ValidatorData) {
 
     const command = getCommand(arg, data.client);
 
-    if (!command) throw new ValidateError('ARGUMENT_NOT_FOUND', {}, { arg });
+    if (!command) throw new ValidateError('ARGUMENT_NOT_FOUND', { arg });
 
     return command;
 };
