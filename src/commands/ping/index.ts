@@ -1,13 +1,16 @@
+import { Permissions } from "discord.js";
 import { Command } from "../../structures/Command";
+import { c003 } from "../../utils/texts";
 
-const command = new Command({
+export const command = new Command({
   name: 'ping',
+  permissions: {
+    client: new Permissions('ADMINISTRATOR')
+  },
   created_timestamp: Date.now(),
   updated_timestamp: Date.now(),
   version: '1.0'
 }, async ({ message, client }) => {
   const msg = await message.channel.send('Ping?');
-  msg.edit(`Ping do bot de ${msg.createdTimestamp - message.createdTimestamp}ms, da API de ${Math.round(client.ws.ping)}ms`);
+  msg.edit(c003(msg.createdTimestamp - message.createdTimestamp, client));
 });
-
-export { command };

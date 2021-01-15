@@ -5,6 +5,9 @@ import { Message } from "discord.js";
 
 /* Inicios de funcoes e seus significados; */
 // t: Textos que vão para terminal!
+// c: Textos que vão para o chat!
+// em: Mensagens de erro!
+// dm: Mensagens que irao para a DM de um usuário/membro!
 
 export function t001(eventInstance: EventInstance, eventName: EventName<EventInstance>, lang: Langs = client.lang) {
   switch (lang) {
@@ -57,5 +60,59 @@ export function t006(commandName: string, erro: any, lang: Langs = client.lang) 
       return `> There was an error executing the ${commandName} command: ${erro}`;
     case 'pt-br':
       return `> Houve um erro ao executar o comando ${commandName}: ${erro}`;
+  };
+};
+
+export function c001(clientPermissionsStringified: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `I don't have the necessary permissions: ${clientPermissionsStringified}`;
+    case 'pt-br':
+      return `Não tenho as permissões necessárias: ${clientPermissionsStringified}`;
+  };
+};
+
+export function c002(memberPermissionsStringified: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `You don't have the necessary permissions: ${memberPermissionsStringified}`;
+    case 'pt-br':
+      return `Você não tem as permissões necessárias: ${memberPermissionsStringified}`;
+  };
+};
+
+export function c003(botPing: number, client: NewClient, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Ping from ${botPing}ms bot, ${Math.round(client.ws.ping)}ms in API`;
+    case 'pt-br':
+      return `Ping do bot de ${botPing}ms, da API de ${Math.round(client.ws.ping)}ms`;
+  };
+};
+
+export function em001(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Error trying to send a message!`;
+    case 'pt-br':
+      return `Erro ao tentar enviar uma mensagem!`;
+  };
+};
+
+export function em002(messageContent: string, argName: string, argText: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Argument not found!\n\`\`\`\n${messageContent} <${argName}>: ${argText}\n\`\`\``;
+    case 'pt-br':
+      return `Argumento não encontrado!\n\`\`\`\n${messageContent} <${argName}>: ${argText}\n\`\`\``;
+  };
+};
+
+export function dm001(errorName: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `The process ran into a: \`${errorName}\`!`;
+    case 'pt-br':
+      return `O processo se deparou com um: \`${errorName}\`!`;
   };
 };

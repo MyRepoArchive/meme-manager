@@ -1,8 +1,14 @@
-import { Channel, Collection, DMChannel, Emoji, Guild, GuildMember, Message, NewsChannel, Permissions, Role, StoreChannel, TextChannel, User, VoiceChannel } from "discord.js";
+import { CategoryChannel, Collection, Emoji, Guild, GuildChannel, GuildMember, Message, NewsChannel, Permissions, Role, Snowflake, StoreChannel, TextChannel, User, VoiceChannel } from "discord.js";
+import { em001 } from '../utils/texts';
 import { client } from "../config/instaceClient";
+import { trySend } from "../functions/trySend";
 import { Command as _Command, ICommandDb } from '../models/Commands';
-import { Event, EventInstance, EventName } from "./Event";
+import { validatePermissions } from "../validators/commands/permissions";
+import { Event, EventName } from "./Event";
 import { Langs, NewClient } from "./NewClient";
+import { EError } from './errors/EError';
+import { validateArgs } from "../validators/commands/args";
+import { Guild as _Guild, IGuildDb } from '../models/Guilds';
 
 export type CommandTypes = 
   | 'moderation' 
@@ -13,23 +19,24 @@ export type CommandTypes =
   | 'administration';
 
 export interface CommandArgsTypes {
-  'command': Command;
-  'string': string;
-  'time': number;
-  'number': number;
-  'snowflake': GuildMember | Guild | Role | User | Emoji | Message | Channel;
-  'member': GuildMember;
-  'textChannel': TextChannel;
-  'voiceChannel': VoiceChannel;
-  'storeChannel': StoreChannel;
-  'newsChannel': NewsChannel;
-  'dmChannel': DMChannel;
-  'role': Role;
-  'guild': Guild;
-  'emoji': Emoji;
-  'event': Event<EventInstance, EventName<EventInstance>>;
-  'user': User;
-  'message': Message;
+  'command': Command | null;
+  'string': string | null;
+  'time': number | null;
+  'number': number | null;
+  'snowflake': Snowflake | null;
+  'member': GuildMember | null;
+  'textChannel': TextChannel | null;
+  'voiceChannel': VoiceChannel | null;
+  'storeChannel': StoreChannel | null;
+  'newsChannel': NewsChannel | null;
+  'categoryChannel': CategoryChannel | null;
+  'channel': GuildChannel | null;
+  'role': Role | null;
+  'guild': Guild | null;
+  'emoji': Emoji | null;
+  'event': Event<'discord_client', EventName<'discord_client'>> | null;
+  'user': User | null;
+  'message': Message | null;
 };
 
 export type CommandDescription = {
@@ -66,19 +73,11 @@ export interface CommandConfig {
       created_at?: Date;
     };
   };
-  args?: {
-    [key: string]: {
-      name: string;
-      text: string;
-      type: keyof CommandArgsTypes;
-      position?: number;
-      required?: boolean;
-      maxLength?: number;
-      minLength?: number;
-      joinSpace?: boolean;
-      length?: number;
-      cut?: boolean;
-    };
+  args?: CommandArgs;
+  permissions?: {
+    client?: Permissions;
+    member?: Permissions;
+    both?: Permissions;
   };
 };
 
@@ -91,7 +90,45 @@ export interface CommandRunParams {
   permissions: Readonly<Permissions>;
 }
 
-export type CommandRun = (params: CommandRunParams) => void;
+export type CommandRun = (params: CommandRunParams, args: CommandProcessedArgs) => void;
+
+export interface CommandRelease {
+  version: string, 
+  name: string,
+  description: CommandReleaseDescription,
+  created_timestamp: number,
+  created_at: Date
+};
+
+export type CommandPermissions = {
+  client: Permissions;
+  member: Permissions;
+} | null;
+
+export interface CommandArg {
+  name: string;
+  text: string;
+  type: keyof CommandArgsTypes;
+  position: number;
+  required?: boolean;
+  maxLength?: number;
+  minLength?: number;
+  max?: number;
+  min?: number;
+  joinSpace?: boolean;
+  length?: number;
+  cut?: boolean;
+  thisGuild?: boolean;
+  mentionPosition?: number;
+};
+
+export type CommandArgs = {
+  [key: string]: CommandArg
+};
+
+export type CommandProcessedArgs = {
+  [key: string]: CommandArgsTypes[keyof CommandArgsTypes]
+} | null;
 
 export class Command {
   name: string;
@@ -111,37 +148,17 @@ export class Command {
   updated_timestamp: number;
   updated_at: Date;
   version: string;
-  releases_notes: Collection<string, {
-    version: string, 
-    name: string,
-    description: CommandReleaseDescription,
-    created_timestamp: number,
-    created_at: Date
-  }> 
+  releases_notes: Collection<string, CommandRelease> 
   | null;
-  args: {
-    [key: string]: {
-      name: string;
-      text: string;
-      type: keyof CommandArgsTypes;
-      position?: number;
-      required?: boolean;
-      maxLength?: number;
-      minLength?: number;
-      joinSpace?: boolean;
-      length?: number;
-      cut?: boolean;
-    };
-  } | null;
-  params: {
-    [key: string]: CommandArgsTypes[keyof CommandArgsTypes]
-  } 
-  | null;
+  args: CommandArgs | null;
+  permissions: CommandPermissions;
+  processed_args: CommandProcessedArgs;
   run: CommandRun;
 
   constructor(config: CommandConfig, run: CommandRun) {
     if (!config.aliases) config.aliases = [];
     if (!Array.isArray(config.aliases)) config.aliases = [config.aliases];
+
     if (config.releases_notes) {
       Object.values(config.releases_notes).forEach((release, index) => {
         release = {
@@ -153,16 +170,22 @@ export class Command {
         }
       });
 
-      this.releases_notes = new Collection(Object.entries(config.releases_notes) as [string, {
-        created_timestamp: number;
-        name: string;
-        created_at: Date;
-        description: CommandReleaseDescription;
-        version: string
-      }][]);
+      this.releases_notes = new Collection(Object.entries(config.releases_notes) as [string, CommandRelease][]);
     } else {
-      this.releases_notes = null
-    }
+      this.releases_notes = null;
+    };
+
+    if (config.permissions) {
+      this.permissions = {
+        client: config.permissions.client || new Permissions(),
+        member: config.permissions.member || new Permissions()
+      }; 
+
+      this.permissions.client!.add(config.permissions.both || 0)
+      this.permissions.member!.add(config.permissions.both || 0)
+    } else {
+      this.permissions = null;
+    };
 
     this.name = config.name;
     this.aliases = config.aliases;
@@ -182,7 +205,7 @@ export class Command {
     this.updated_at = config.updated_at || new Date(config.updated_timestamp);
     this.version = config.version;
     this.args = config.args || null;
-    this.params = null;
+    this.processed_args = null;
     this.run = run;
 
     if (config.uses) this.uses = config.uses;
@@ -190,5 +213,26 @@ export class Command {
 
   async uses() {
     return (await _Command.findOne({ name: this.name }) as ICommandDb | null)?.uses || 0;
+  };
+
+  async index(params: CommandRunParams) {
+    const onThen = () => {
+      this.run(params, this.processed_args);
+    };
+
+    const onCatch = (error: Error) => {
+      trySend(params.message.channel, { secondChannel: params.message.author, content: error.message }).catch(async e => {
+        const lang = (await _Guild.findOne({ guild_id: params.message.guild!.id }) as IGuildDb  | null)?.lang || client.lang;
+
+        new EError(em001(lang), { channel: params.message.channel, content: error.message, secondChannel: params.message.author, erro: e })
+      });
+    };
+
+    this.validate(params.message, params.args, params.client).then(onThen, onCatch)
+  };
+
+  async validate(message: Message, args: string[], client: NewClient) {
+    await validatePermissions(this.permissions, message);
+    await validateArgs(this.args, args, message, client, this.processed_args);
   };
 };

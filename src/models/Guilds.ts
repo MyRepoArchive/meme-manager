@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { client } from "../config/instaceClient";
+import { Langs } from "../structures/NewClient";
 
 const guildSchema = new Schema({
   guild_id: {
@@ -13,6 +14,12 @@ const guildSchema = new Schema({
     required: true,
     maxlength: 10,
     default: client.defaultPrefix
+  },
+  lang: {
+    type: String,
+    required: true,
+    maxlength: 4,
+    default: client.lang
   }
 });
 
@@ -21,12 +28,15 @@ const _Guild = model('guilds', guildSchema);
 export interface IGuild {
   guild_id: string;
   prefix?: string;
+  lang?: Langs;
 };
 
 export interface IGuildDb<T = any> extends IGuild {
   _id?: T;
   __v?: number;
+  guild_id: string;
   prefix: string; 
+  lang: Langs;
 }
 
 export class Guild extends _Guild {
