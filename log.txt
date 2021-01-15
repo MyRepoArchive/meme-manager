@@ -1,37 +1,14 @@
 [
   {
-    "date": "2021-01-12T15:56:50.934Z",
-    "important": false,
-    "erro": {
-      "name": "Error",
-      "message": "Não tenho as permissões necessárias: `ADMINISTRATOR`",
-      "stack": "Error: Não tenho as permissões necessárias: `ADMINISTRATOR`
-    at Object.validatePermissions (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\validators\\commands\\permissions.ts:19:29)
-    at Command.<anonymous> (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:235:5)
-    at Generator.next (<anonymous>)
-    at C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:4:12)
-    at Command.validate (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:105:16)
-    at Command.<anonymous> (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:231:10)
-    at Generator.next (<anonymous>)
-    at C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:4:12)
-    at Command.index (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:91:16)
-    at C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\events\\message\\index.ts:25:9
-    at Generator.next (<anonymous>)
-    at fulfilled (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\events\\message\\index.ts:5:58)"
-    }
-  },
-  {
-    "date": "2021-01-12T15:56:52.917Z",
+    "date": "2021-01-15T16:24:46.362Z",
     "important": false,
     "erro": {
       "name": "Error",
       "message": "Erro ao tentar enviar uma mensagem!",
       "stack": "Error: Erro ao tentar enviar uma mensagem!
-    at C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:227:9
+    at Command.<anonymous> (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:226:9)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:5:58)
     at processTicksAndRejections (internal/process/task_queues.js:93:5)"
     },
     "args": {
@@ -50,12 +27,13 @@
         ],
         "topic": null,
         "nsfw": false,
-        "lastMessageID": "798581267976290357",
+        "lastMessageID": "799675483771895808",
         "rateLimitPerUser": 0,
         "lastPinTimestamp": null,
         "guild": "672933215836569610",
         "messages": [
-          "798581267976290357"
+          "799675461537234975",
+          "799675483771895808"
         ],
         "createdTimestamp": 1597959100596
       },
@@ -69,7 +47,72 @@
         "bot": false,
         "discriminator": "0424",
         "avatar": "7f41b812a99d42a786e84a76489c45b7",
-        "lastMessageChannelID": null,
+        "lastMessageChannelID": "746119288464736347",
+        "createdTimestamp": 1516373859608,
+        "defaultAvatarURL": "https://cdn.discordapp.com/embed/avatars/4.png",
+        "tag": "Canguru#0424",
+        "avatarURL": "https://cdn.discordapp.com/avatars/403925985847934976/7f41b812a99d42a786e84a76489c45b7.webp",
+        "displayAvatarURL": "https://cdn.discordapp.com/avatars/403925985847934976/7f41b812a99d42a786e84a76489c45b7.webp"
+      },
+      "erro": {
+        "name": "DiscordAPIError",
+        "message": "Cannot send messages to this user",
+        "method": "post",
+        "path": "/channels/798555815623000134/messages",
+        "code": 50007,
+        "httpStatus": 403
+      }
+    }
+  },
+  {
+    "date": "2021-01-15T16:24:51.158Z",
+    "important": false,
+    "erro": {
+      "name": "Error",
+      "message": "Erro ao tentar enviar uma mensagem!",
+      "stack": "Error: Erro ao tentar enviar uma mensagem!
+    at Command.<anonymous> (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:226:9)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\\Users\\Pichau\\Documents\\Bots\\meme-manager\\src\\structures\\Command.ts:5:58)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)"
+    },
+    "args": {
+      "channel": {
+        "type": "text",
+        "deleted": false,
+        "id": "746119288464736347",
+        "name": "☕testes-coffe",
+        "rawPosition": 4,
+        "parentID": "746120196200202361",
+        "permissionOverwrites": [
+          "663894792056602645",
+          "739309305588744263",
+          "746743789716111400",
+          "796733063265779743"
+        ],
+        "topic": null,
+        "nsfw": false,
+        "lastMessageID": "799675483771895808",
+        "rateLimitPerUser": 0,
+        "lastPinTimestamp": null,
+        "guild": "672933215836569610",
+        "messages": [
+          "799675461537234975",
+          "799675483771895808"
+        ],
+        "createdTimestamp": 1597959100596
+      },
+      "content": "Não tenho as permissões necessárias: `ADMINISTRATOR`",
+      "secondChannel": {
+        "id": "403925985847934976",
+        "system": null,
+        "locale": null,
+        "flags": 0,
+        "username": "Canguru",
+        "bot": false,
+        "discriminator": "0424",
+        "avatar": "7f41b812a99d42a786e84a76489c45b7",
+        "lastMessageChannelID": "746119288464736347",
         "createdTimestamp": 1516373859608,
         "defaultAvatarURL": "https://cdn.discordapp.com/embed/avatars/4.png",
         "tag": "Canguru#0424",

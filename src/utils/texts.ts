@@ -91,6 +91,15 @@ export function c003(botPing: number, client: NewClient, lang: Langs = client.la
   };
 };
 
+export function c004(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Ping?`;
+    case 'pt-br':
+      return `Ping?`;
+  };
+};
+
 export function em001(lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
