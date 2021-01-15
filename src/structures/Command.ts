@@ -9,6 +9,7 @@ import { Langs, NewClient } from "./NewClient";
 import { EError } from './errors/EError';
 import { validateArgs } from "../validators/commands/args";
 import { Guild as _Guild, IGuildDb } from '../models/Guilds';
+import { getGuildLang } from "../functions/getters/guildLang";
 
 export type CommandTypes = 
   | 'moderation' 
@@ -222,9 +223,7 @@ export class Command {
 
     const onCatch = (error: Error) => {
       trySend(params.message.channel, { secondChannel: params.message.author, content: error.message }).catch(async e => {
-        const lang = (await _Guild.findOne({ guild_id: params.message.guild!.id }) as IGuildDb  | null)?.lang || client.lang;
-
-        new EError(em001(lang), { channel: params.message.channel, content: error.message, secondChannel: params.message.author, erro: e })
+        new EError(em001(await getGuildLang(params.message.guild!.id)), { channel: params.message.channel, content: error.message, secondChannel: params.message.author, erro: e })
       });
     };
 

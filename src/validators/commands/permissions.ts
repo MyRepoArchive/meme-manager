@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import { client } from "../../config/instaceClient";
+import { getGuildLang } from "../../functions/getters/guildLang";
 import { Guild, IGuildDb } from "../../models/Guilds";
 import { CommandPermissions } from "../../structures/Command";
 import { EError } from "../../structures/errors/EError";
@@ -18,8 +19,6 @@ export async function validatePermissions(permissions: CommandPermissions, messa
   const mePermissions = message.guild!.me!.hasPermission(permissions.client);
   const memberPermissions = message.member!.hasPermission(permissions.member);
 
-  const lang = (await Guild.findOne({ guild_id: message.guild!.id }) as IGuildDb  | null)?.lang || client.lang;
-
-  if (!mePermissions) throw new EError(c001(clientPermissionsStringified, lang), null, { important: false, log: false });
-  if (!memberPermissions) throw new EError(c002(memberPermissionsStringified, lang), null, { important: false, log: false });
+  if (!mePermissions) throw new EError(c001(clientPermissionsStringified, await getGuildLang(message.guild!.id)), null, { important: false, log: false });
+  if (!memberPermissions) throw new EError(c002(memberPermissionsStringified, await getGuildLang(message.guild!.id)), null, { important: false, log: false });
 };
