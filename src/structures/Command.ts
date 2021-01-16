@@ -107,7 +107,6 @@ export type CommandPermissions = {
 } | null;
 
 export interface CommandArg {
-  name: string;
   text: string;
   type: keyof CommandArgsTypes;
   position: number;
