@@ -15,6 +15,10 @@ export interface NewClientConfig {
 export class NewClient extends Client {
   commands: Collection<string, Command> = new Collection();
   aliases: Collection<string, string> = new Collection();
+  cooldowns: Collection<string, Collection<Snowflake, {
+    timestamp: number,
+    usage: number
+  }>> = new Collection();
   errors: EError[] = [];
   events: Collection<EventName<'discord_client'>, Event<'discord_client', EventName<'discord_client'>>> = new Collection();
   defaultPrefix: string;
