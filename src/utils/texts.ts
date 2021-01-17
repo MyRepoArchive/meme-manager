@@ -190,6 +190,15 @@ export function em010(argumentIndex: number | string, min: number, lang: Langs =
   };
 };
 
+export function em011(waitingTime: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `You are trying to use this command many times in a row, wait **${waitingTime}**!`;
+    case 'pt-br':
+      return `Você está tentando usar este comando muitas vezes seguidas, aguarde **${waitingTime}**!`
+  };
+};
+
 export function dm001(errorName: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':

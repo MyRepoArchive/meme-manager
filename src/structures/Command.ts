@@ -10,6 +10,7 @@ import { EError } from './errors/EError';
 import { validateArgs } from "../validators/commands/args";
 import { Guild as _Guild, IGuildDb } from '../models/Guilds';
 import { getGuildLang } from "../functions/getters/guildLang";
+import { validateCooldown } from "../validators/commands/cooldown";
 
 export type CommandTypes = 
   | 'moderation' 
@@ -141,6 +142,10 @@ export class Command {
   example_video: string | null;
   cooldown: number;
   usage_limit: number;
+  cooldowns: Collection<string, {
+    timestamp: number;
+    usage: number;
+  }> = new Collection();
   active: boolean;
   reason_inactivity: string | null;
   created_timestamp: number;
@@ -226,11 +231,13 @@ export class Command {
       });
     };
 
-    this.validate(params.message, params.args, params.client).then(onThen, onCatch)
+    this.validate(params.message, params.args, params.client).then(onThen, onCatch);
   };
 
   async validate(message: Message, args: string[], client: NewClient) {
+    await validateCooldown(client, this, message);
     await validatePermissions(this.permissions, message);
-    await validateArgs(this.args, args, message, client, this.processed_args);
+    const processed_args = await validateArgs(this.args, args, message, client, this.processed_args);
+    this.processed_args = processed_args!;
   };
 };

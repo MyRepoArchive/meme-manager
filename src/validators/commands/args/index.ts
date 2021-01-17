@@ -93,6 +93,8 @@ export async function validateArgs(args: CommandArgs | null, messageArgs: string
     index++;
   };
 
+  return processed_args;
+
   function messageContentSpaceReduced(commandLength: number) {
     const reducerSpace = (acc: any, cur: string, index: number) => {
       if (index >= index) return acc;

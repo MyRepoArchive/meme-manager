@@ -18,8 +18,11 @@ const guildSchema = new Schema({
   lang: {
     type: String,
     required: true,
-    maxlength: 4,
+    maxlength: 5,
     default: client.lang
+  },
+  memes_channel: {
+    type: String
   }
 });
 
@@ -29,6 +32,7 @@ export interface IGuild {
   guild_id: string;
   prefix?: string;
   lang?: Langs;
+  memes_channel?: string;
 };
 
 export interface IGuildDb<T = any> extends IGuild {
@@ -37,6 +41,7 @@ export interface IGuildDb<T = any> extends IGuild {
   guild_id: string;
   prefix: string; 
   lang: Langs;
+  memes_channel?: string;
 }
 
 export class Guild extends _Guild {

@@ -18,7 +18,7 @@ export const event = new Event('discord_client', 'message', async (client, messa
   if (!comando) return;
 
   const cmd = client.commands.get(comando) || client.commands.get(client.aliases.get(comando) || '');
-
+  
   if (!cmd) return;
 
   try {

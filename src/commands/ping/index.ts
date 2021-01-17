@@ -9,7 +9,7 @@ export const command = new Command({
   version: '1.0'
 }, async ({ message, client }) => {
   const guildLang = await getGuildLang(message.guild!.id);
-  
+
   const msg = await message.channel.send(c004(guildLang));
   msg.edit(c003(msg.createdTimestamp - message.createdTimestamp, client, guildLang));
 });
