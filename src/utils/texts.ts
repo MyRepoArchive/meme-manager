@@ -1,7 +1,7 @@
 import { EventInstance, EventName } from "../structures/Event";
 import { Langs, NewClient } from "../structures/NewClient";
 import { client } from "../config/instaceClient";
-import { Message } from "discord.js";
+import { Message, TextChannel } from "discord.js";
 import { CommandArgsTypes } from "../structures/Command";
 
 /* Inicios de funcoes e seus significados; */
@@ -97,6 +97,24 @@ export function c004(lang: Langs = client.lang) {
       return `Ping?`;
     case 'pt-br':
       return `Ping?`;
+  };
+};
+
+export function c005(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There was an error setting the memes channel in the database! Try again later!`;
+    case 'pt-br':
+      return `Houve um erro ao setar o canal de memes no banco de dados! Tente novamente mais tarde!`;
+  };
+};
+
+export function c006(memeChannel: TextChannel, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `The channel ${memeChannel} has been successfully set as a meme channel!`;
+    case 'pt-br':
+      return `O canal ${memeChannel} foi setado com sucesso como canal de memes!`;
   };
 };
 

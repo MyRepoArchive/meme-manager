@@ -1,9 +1,10 @@
-"use strict";
-
 import { Permissions, TextChannel } from 'discord.js';
 import { client } from '../../config/instaceClient';
+import { getGuildLang } from '../../functions/getters/guildLang';
+import { trySend } from '../../functions/trySend';
 import { Guild } from '../../models/Guilds';
 import { Command } from '../../structures/Command';
+import { c005, c006 } from '../../utils/texts';
 
 export const command = new Command({
   name: 'setmemechannel',
@@ -38,8 +39,17 @@ export const command = new Command({
   },
   type: 'configuration',
   usage: `${client.defaultPrefix}setmemechannel \`<TextChannel>\``
-}, async ({ message }, { meme_channel }: { meme_channel?: TextChannel }) => {
-  const guildDb = await Guild.findOneAndUpdate({ guild_id: message.guild.id }, { memes_channel: meme_channel.id }, { new: true, useFindAndModify: false }).then(() => { throw null });
+}, async ({ message }, args) => {
+  const memeChannel = args!.meme_channel as TextChannel;
+  const guildLang = await getGuildLang(message.guild!.id);
 
-  console.log(guildDb)
+  Guild.updateOne(
+    { guild_id: message.guild!.id }, 
+    { memes_channel: memeChannel.id }, 
+    { new: true, useFindAndModify: false }
+  ).then((guildDb) => {
+    trySend(message.channel, { content: c006(memeChannel, guildLang) }).catch(() => {});
+  }, async (e) => {
+    trySend(message.channel, { content: c005(guildLang) }).catch(() => {});
+  });
 });
