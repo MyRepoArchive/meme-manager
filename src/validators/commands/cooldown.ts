@@ -1,12 +1,11 @@
 import { Message } from "discord.js";
 import ms from "ms";
-import { getGuildLang } from "../../functions/getters/guildLang";
 import { Command } from "../../structures/Command";
 import { EError } from "../../structures/errors/EError";
-import { NewClient } from "../../structures/NewClient";
-import { em011 } from "../../utils/texts";
+import { Langs, NewClient } from "../../structures/NewClient";
+import { t023 } from "../../utils/texts";
 
-export async function validateCooldown(client: NewClient, command: Command, message: Message) {
+export async function validateCooldown(client: NewClient, command: Command, message: Message, guildLang: Langs) {
   const userId = message.author.id;
 
   if (client.admins.includes(userId)) return;
@@ -18,7 +17,7 @@ export async function validateCooldown(client: NewClient, command: Command, mess
 
   if (command.cooldowns.get(userId)!.usage > command.usage_limit) {
     if (timeBetween < command.cooldown) {
-      throw new EError(em011(waitingTime, await getGuildLang(message.guild!.id)), null, { log: false });
+      throw new EError(t023(waitingTime, guildLang), null, { log: false });
     } else command.cooldowns.get(userId)!.usage = 0;
   };
 

@@ -64,7 +64,7 @@ export function t006(commandName: string, erro: any, lang: Langs = client.lang) 
   };
 };
 
-export function c001(clientPermissionsStringified: string, lang: Langs = client.lang) {
+export function t007(clientPermissionsStringified: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `I don't have the necessary permissions: ${clientPermissionsStringified}`;
@@ -73,7 +73,7 @@ export function c001(clientPermissionsStringified: string, lang: Langs = client.
   };
 };
 
-export function c002(memberPermissionsStringified: string, lang: Langs = client.lang) {
+export function t008(memberPermissionsStringified: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `You don't have the necessary permissions: ${memberPermissionsStringified}`;
@@ -82,7 +82,7 @@ export function c002(memberPermissionsStringified: string, lang: Langs = client.
   };
 };
 
-export function c003(botPing: number, client: NewClient, lang: Langs = client.lang) {
+export function t009(botPing: number, client: NewClient, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Ping from ${botPing}ms bot, ${Math.round(client.ws.ping)}ms in API`;
@@ -91,7 +91,7 @@ export function c003(botPing: number, client: NewClient, lang: Langs = client.la
   };
 };
 
-export function c004(lang: Langs = client.lang) {
+export function t010(lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Ping?`;
@@ -100,7 +100,7 @@ export function c004(lang: Langs = client.lang) {
   };
 };
 
-export function c005(lang: Langs = client.lang) {
+export function t011(lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `There was an error setting the memes channel in the database! Try again later!`;
@@ -109,7 +109,7 @@ export function c005(lang: Langs = client.lang) {
   };
 };
 
-export function c006(memeChannel: TextChannel, lang: Langs = client.lang) {
+export function t012(memeChannel: TextChannel, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `The channel ${memeChannel} has been successfully set as a meme channel!`;
@@ -118,7 +118,7 @@ export function c006(memeChannel: TextChannel, lang: Langs = client.lang) {
   };
 };
 
-export function em001(lang: Langs = client.lang) {
+export function t013(lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Error trying to send a message!`;
@@ -127,7 +127,7 @@ export function em001(lang: Langs = client.lang) {
   };
 };
 
-export function em002(messageContent: string, argName: string, argText: string, lang: Langs = client.lang) {
+export function t014(messageContent: string, argName: string, argText: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Argument not found!\n\`\`\`\n${messageContent} <${argName}>: ${argText}\n\`\`\``;
@@ -136,7 +136,7 @@ export function em002(messageContent: string, argName: string, argText: string, 
   };
 };
 
-export function em003(argumentIndex: number | string, minCharacters: number, errorLength: string, lang: Langs = client.lang) {
+export function t015(argumentIndex: number | string, minCharacters: number, errorLength: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Argument (\`${argumentIndex}\`) is less than the minimum size (\`${minCharacters}\`)\n${errorLength}`;
@@ -145,7 +145,7 @@ export function em003(argumentIndex: number | string, minCharacters: number, err
   };
 };
 
-export function em004(type: keyof CommandArgsTypes, lang: Langs = client.lang) {
+export function t016(type: keyof CommandArgsTypes, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `_A value of type \`${type}\` is expected_`;
@@ -154,7 +154,7 @@ export function em004(type: keyof CommandArgsTypes, lang: Langs = client.lang) {
   };
 };
 
-export function em005(argumentIndex: number | string, maxCharacters: number, errorLength: string, lang: Langs = client.lang) {
+export function t017(argumentIndex: number | string, maxCharacters: number, errorLength: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Argument(\`${argumentIndex}\`) is greater than the maximum size (\`${maxCharacters}\`)\n${errorLength}`;
@@ -163,7 +163,7 @@ export function em005(argumentIndex: number | string, maxCharacters: number, err
   };
 };
 
-export function em006(argumentIndex: number | string, lengthCharacters: number, errorLength: string, lang: Langs = client.lang) {
+export function t018(argumentIndex: number | string, lengthCharacters: number, errorLength: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Argument (\`${argumentIndex}\`) is not equal to the desired size (\`${lengthCharacters}\`)\n${errorLength}`;
@@ -172,7 +172,7 @@ export function em006(argumentIndex: number | string, lengthCharacters: number, 
   };
 };
 
-export function em007(argumentIndex: number | string, notFound: string, lang: Langs = client.lang) {
+export function t019(argumentIndex: number | string, notFound: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Argument (\`${argumentIndex}\`) not identified!\n${notFound}`;
@@ -181,7 +181,7 @@ export function em007(argumentIndex: number | string, notFound: string, lang: La
   };
 };
 
-export function em008(argumentIndex: number | string, lang: Langs = client.lang) {
+export function t020(argumentIndex: number | string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Argument (\`${argumentIndex}\`) must be of type \`number\`!`;
@@ -190,7 +190,7 @@ export function em008(argumentIndex: number | string, lang: Langs = client.lang)
   };
 };
 
-export function em009(argumentIndex: number | string, max: number, lang: Langs = client.lang) {
+export function t021(argumentIndex: number | string, max: number, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Argument (\`${argumentIndex}\`) is greater than the maximum (\`${max}\`)!`;
@@ -199,7 +199,7 @@ export function em009(argumentIndex: number | string, max: number, lang: Langs =
   };
 };
 
-export function em010(argumentIndex: number | string, min: number, lang: Langs = client.lang) {
+export function t022(argumentIndex: number | string, min: number, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `Argument (\`${argumentIndex}\`) is less than the minimum (\`${min}\`)!`;
@@ -208,7 +208,7 @@ export function em010(argumentIndex: number | string, min: number, lang: Langs =
   };
 };
 
-export function em011(waitingTime: string, lang: Langs = client.lang) {
+export function t023(waitingTime: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `You are trying to use this command many times in a row, wait **${waitingTime}**!`;
@@ -217,11 +217,38 @@ export function em011(waitingTime: string, lang: Langs = client.lang) {
   };
 };
 
-export function dm001(errorName: string, lang: Langs = client.lang) {
+export function t024(errorName: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
       return `The process ran into a: \`${errorName}\`!`;
     case 'pt-br':
       return `O processo se deparou com um: \`${errorName}\`!`;
+  };
+};
+
+export function t025(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There was an error setting a new meme channel!`;
+    case 'pt-br':
+      return `Houve um erro ao setar um novo canal de memes!`;
+  };
+};
+
+export function t026(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `This command does not exist!`;
+    case 'pt-br':
+      return `Este comando não existe!`;
+  };
+};
+
+export function t027(client: NewClient, prefix: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Hi, I'm **${client.user!.username}**, if you need any help, my prefix is ​​\`${prefix}\`!`;
+    case 'pt-br':
+      return `Olá, sou o **${client.user!.username}**, se precisar de alguma ajuda, meu prefixo é \`${prefix}\`!`;
   };
 };

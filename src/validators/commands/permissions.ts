@@ -1,12 +1,10 @@
 import { Message } from "discord.js";
-import { client } from "../../config/instaceClient";
-import { getGuildLang } from "../../functions/getters/guildLang";
-import { Guild, IGuildDb } from "../../models/Guilds";
 import { CommandPermissions } from "../../structures/Command";
 import { EError } from "../../structures/errors/EError";
-import { c001, c002 } from "../../utils/texts";
+import { Langs } from "../../structures/NewClient";
+import { t007, t008 } from "../../utils/texts";
 
-export async function validatePermissions(permissions: CommandPermissions, message: Message) {
+export async function validatePermissions(permissions: CommandPermissions, message: Message, guildLang: Langs) {
   if (!permissions) return;
 
   const clientPermissionsStringified = Object.entries(permissions.client.serialize().ADMINISTRATOR ? { ADMINISTRATOR: true } : permissions.client.serialize())
@@ -19,6 +17,6 @@ export async function validatePermissions(permissions: CommandPermissions, messa
   const mePermissions = message.guild!.me!.hasPermission(permissions.client);
   const memberPermissions = message.member!.hasPermission(permissions.member);
 
-  if (!mePermissions) throw new EError(c001(clientPermissionsStringified, await getGuildLang(message.guild!.id)), null, { important: false, log: false });
-  if (!memberPermissions) throw new EError(c002(memberPermissionsStringified, await getGuildLang(message.guild!.id)), null, { important: false, log: false });
+  if (!mePermissions) throw new EError(t007(clientPermissionsStringified, guildLang), null, { important: false, log: false });
+  if (!memberPermissions) throw new EError(t008(memberPermissionsStringified, guildLang), null, { important: false, log: false });
 };

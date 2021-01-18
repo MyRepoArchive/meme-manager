@@ -1,8 +1,7 @@
 import { Snowflake } from "discord.js";
 import { writeFileSync } from "fs";
 import { client as _client } from "../../config/instaceClient";
-import { trySend } from "../../functions/trySend";
-import { dm001 } from "../../utils/texts";
+import { t024 } from "../../utils/texts";
 import { NewClient } from "../NewClient";
 
 export interface EErrorOptions { log?: boolean, important?: boolean, client?: NewClient };
@@ -50,7 +49,9 @@ export class EError extends Error {
     async function notify(id: Snowflake, errorName: string) {
       const user = await client.users.fetch(id);
 
-      trySend(user, { content: dm001(errorName) }).catch(() => {});
+      if (!user) return;
+
+      user.send(t024(errorName)).catch(() => {});
     };
   };
 };

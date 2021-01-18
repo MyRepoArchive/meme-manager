@@ -1,16 +1,13 @@
 import { CategoryChannel, Collection, Emoji, Guild, GuildChannel, GuildMember, Message, NewsChannel, Permissions, Role, Snowflake, StoreChannel, TextChannel, User, VoiceChannel } from "discord.js";
-import { em001 } from '../utils/texts';
 import { client } from "../config/instaceClient";
-import { trySend } from "../functions/trySend";
 import { Command as _Command, ICommandDb } from '../models/Commands';
 import { validatePermissions } from "../validators/commands/permissions";
 import { Event, EventName } from "./Event";
 import { Langs, NewClient } from "./NewClient";
-import { EError } from './errors/EError';
 import { validateArgs } from "../validators/commands/args";
-import { Guild as _Guild, IGuildDb } from '../models/Guilds';
-import { getGuildLang } from "../functions/getters/guildLang";
+import { Guild as _Guild } from '../models/Guilds';
 import { validateCooldown } from "../validators/commands/cooldown";
+import { sender } from "../functions/sender";
 
 export type CommandTypes = 
   | 'moderation' 
@@ -90,6 +87,7 @@ export interface CommandRunParams {
   comando: string;
   args: string[];
   permissions: Readonly<Permissions>;
+  guildLang: Langs
 }
 
 export type CommandRun = (params: CommandRunParams, args: CommandProcessedArgs) => void;
@@ -226,18 +224,16 @@ export class Command {
     };
 
     const onCatch = (error: Error) => {
-      trySend(params.message.channel, { secondChannel: params.message.author, content: error.message }).catch(async e => {
-        new EError(em001(await getGuildLang(params.message.guild!.id)), { channel: params.message.channel, content: error.message, secondChannel: params.message.author, erro: e })
-      });
+      sender(params.message, error.message, 'cdr').catch(() => {});
     };
 
-    this.validate(params.message, params.args, params.client).then(onThen, onCatch);
+    this.validate(params.message, params.args, params.client, params.guildLang).then(onThen, onCatch);
   };
 
-  async validate(message: Message, args: string[], client: NewClient) {
-    await validateCooldown(client, this, message);
-    await validatePermissions(this.permissions, message);
-    const processed_args = await validateArgs(this.args, args, message, client, this.processed_args);
+  async validate(message: Message, args: string[], client: NewClient, guildLang: Langs) {
+    await validateCooldown(client, this, message, guildLang);
+    await validatePermissions(this.permissions, message, guildLang);
+    const processed_args = await validateArgs(this.args, args, message, client, this.processed_args, guildLang);
     this.processed_args = processed_args!;
   };
 };

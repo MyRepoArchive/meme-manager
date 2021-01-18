@@ -1,12 +1,12 @@
 import { Permissions, TextChannel } from 'discord.js';
 import { client } from '../../config/instaceClient';
-import { getGuildLang } from '../../functions/getters/guildLang';
-import { trySend } from '../../functions/trySend';
+import { sender } from '../../functions/sender';
 import { Guild } from '../../models/Guilds';
-import { Command } from '../../structures/Command';
-import { c005, c006 } from '../../utils/texts';
+import { Command, CommandConfig, CommandRun } from '../../structures/Command';
+import { EError } from '../../structures/errors/EError';
+import { t011, t012, t025 } from '../../utils/texts';
 
-export const command = new Command({
+const config: CommandConfig = {
   name: 'setmemechannel',
   aliases: ['setchannelmeme', 'registermemechannel', 'smc'],
   created_timestamp: 1610793950948,
@@ -39,17 +39,26 @@ export const command = new Command({
   },
   type: 'configuration',
   usage: `${client.defaultPrefix}setmemechannel \`<TextChannel>\``
-}, async ({ message }, args) => {
+};
+
+const run: CommandRun = async ({ message, guildLang, client }, args) => {
   const memeChannel = args!.meme_channel as TextChannel;
-  const guildLang = await getGuildLang(message.guild!.id);
 
   Guild.updateOne(
     { guild_id: message.guild!.id }, 
     { memes_channel: memeChannel.id }, 
     { new: true, useFindAndModify: false }
-  ).then((guildDb) => {
-    trySend(message.channel, { content: c006(memeChannel, guildLang) }).catch(() => {});
-  }, async (e) => {
-    trySend(message.channel, { content: c005(guildLang) }).catch(() => {});
+  ).then(() => {
+    sender(message, t012(memeChannel, guildLang), 'cd').catch(() => message.react('✔️').catch(() => {}));
+  }, (e) => {
+    sender(message, t011(guildLang), 'cd').catch(() => message.react('❌').catch(() => {}));
+
+    throw new EError(t025(guildLang), {
+      error: e,
+      message,
+      memeChannel
+    }, { important: true, client });
   });
-});
+}
+
+export const command = new Command(config, run);
