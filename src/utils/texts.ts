@@ -2,7 +2,8 @@ import { EventInstance, EventName } from "../structures/Event";
 import { Langs, NewClient } from "../structures/NewClient";
 import { client } from "../config/instaceClient";
 import { Message, TextChannel } from "discord.js";
-import { CommandArgsTypes } from "../structures/Command";
+import { Command, CommandArgsTypes } from "../structures/Command";
+import ms from "ms";
 
 /* Inicios de funcoes e seus significados; */
 // t: Textos que vão para terminal!
@@ -250,5 +251,77 @@ export function t027(client: NewClient, prefix: string, lang: Langs = client.lan
       return `Hi, I'm **${client.user!.username}**, if you need any help, my prefix is ​​\`${prefix}\`!`;
     case 'pt-br':
       return `Olá, sou o **${client.user!.username}**, se precisar de alguma ajuda, meu prefixo é \`${prefix}\`!`;
+  };
+};
+
+export function t028(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Type`;
+    case 'pt-br':
+      return `Tipo`;
+  };
+};
+
+export function t029(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Cooldown`;
+    case 'pt-br':
+      return `Cooldown`;
+  };
+};
+
+export function t030(command: Command, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `**${ms(command.cooldown)}** up to **${command.usage_limit}** in a row`;
+    case 'pt-br':
+      return `**${ms(command.cooldown)}** com até **${command.usage_limit}** vezes seguidas`;
+  };
+};
+
+export function t031(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Status`;
+    case 'pt-br':
+      return `Status`;
+  };
+};
+
+export function t032(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `✔️ Active`;
+    case 'pt-br':
+      return `✔️ Ativo`;
+  };
+};
+
+export function t033(command: Command, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `❌ Inactive\n> ${command.reason_inactivity || 'NO REASON REPORTED'}`;
+    case 'pt-br':
+      return `❌ Inativo\n> ${command.reason_inactivity || 'SEM MOTIVO INFORMADO'}`;
+  };
+};
+
+export function t034(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `Dates`;
+    case 'pt-br':
+      return `Datas`;
+  };
+};
+
+export function t035(creationDate: string, lastUpdateDate: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `> Created at: ${creationDate}\n> Last updated: ${lastUpdateDate}`;
+    case 'pt-br':
+      return `> Criado em: ${creationDate}\n> Ultima atualização: ${lastUpdateDate}`;
   };
 };
