@@ -293,9 +293,9 @@ export function t031(lang: Langs = client.lang) {
 export function t032(lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
-      return `✔️ Active`;
+      return `✅ Active`;
     case 'pt-br':
-      return `✔️ Ativo`;
+      return `✅ Ativo`;
   };
 };
 
@@ -323,5 +323,50 @@ export function t035(creationDate: string, lastUpdateDate: string, lang: Langs =
       return `> Created at: ${creationDate}\n> Last updated: ${lastUpdateDate}`;
     case 'pt-br':
       return `> Criado em: ${creationDate}\n> Ultima atualização: ${lastUpdateDate}`;
+  };
+};
+
+export function t036(prefix: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `You can also use ${prefix} help <command> to display detailed information about a command!`;
+    case 'pt-br':
+      return `Você também pode usar ${prefix}help <command> para exibir informações detalhadas de um comando!`;
+  };
+};
+
+export function t037(command: Command, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `The command ${command.name} is currently inactive!\n${command.reason_inactivity ? `Reason: \`${command.reason_inactivity}\`` : ''}`;
+    case 'pt-br':
+      return `O comando ${command.name} está inativo no momento!\n${command.reason_inactivity ? `Motivo: \`${command.reason_inactivity}\`` : ''}`;
+  };
+};
+
+export function t038(newPrefix: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `New prefix set on the server: \`${newPrefix}\``;
+    case 'pt-br':
+      return `Novo prefixo setado no servidor: \`${newPrefix}\``;
+  };
+};
+
+export function t039(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There was an error when setting a new prefix, try again later!`;
+    case 'pt-br':
+      return `Houve um erro ao setar um novo prefixo, tente novamente mais tarde!`;
+  };
+};
+
+export function t040(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There was an error when setting a new prefix on a server!`;
+    case 'pt-br':
+      return `Houve um erro ao setar um novo prefixo em um servidor!`;
   };
 };

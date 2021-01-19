@@ -8,6 +8,7 @@ import { validateArgs } from "../validators/commands/args";
 import { Guild as _Guild } from '../models/Guilds';
 import { validateCooldown } from "../validators/commands/cooldown";
 import { sender } from "../functions/sender";
+import { validateActive } from "../validators/commands/active";
 
 export type CommandTypes = 
   | 'moderation' 
@@ -231,6 +232,7 @@ export class Command {
   };
 
   async validate(message: Message, args: string[], client: NewClient, guildLang: Langs) {
+    await validateActive(this, guildLang);
     await validateCooldown(client, this, message, guildLang);
     await validatePermissions(this.permissions, message, guildLang);
     const processed_args = await validateArgs(this.args, args, message, client, this.processed_args, guildLang);

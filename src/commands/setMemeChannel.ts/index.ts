@@ -10,7 +10,7 @@ const config: CommandConfig = {
   name: 'setmemechannel',
   aliases: ['setchannelmeme', 'registermemechannel', 'smc'],
   created_timestamp: 1610793950948,
-  updated_timestamp: 1610793964019,
+  updated_timestamp: 1611057130983,
   version: '1.0',
   args: {
     'meme_channel': {
@@ -49,11 +49,11 @@ const run: CommandRun = async ({ message, guildLang, client }, args) => {
     { memes_channel: memeChannel.id }, 
     { new: true, useFindAndModify: false }
   ).then(() => {
-    sender(message, t012(memeChannel, guildLang), 'cd').catch(() => message.react('✔️').catch(() => {}));
+    sender(message, t012(memeChannel, guildLang), 'cd').catch(() => message.react('✅').catch(() => {}));
   }, (e) => {
     sender(message, t011(guildLang), 'cd').catch(() => message.react('❌').catch(() => {}));
 
-    throw new EError(t025(guildLang), {
+    throw new EError(t025(), {
       error: e,
       message,
       memeChannel
