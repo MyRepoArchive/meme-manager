@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Message, MessageEmbed } from 'discord.js';
-import ms from 'ms';
+import { sender } from '../../../functions/sender';
 import { Command } from '../../../structures/Command';
 import { Langs } from '../../../structures/NewClient';
 import { t028, t029, t030, t031, t032, t033, t034, t035 } from '../../../utils/texts';
@@ -18,6 +18,9 @@ export default async function showCommandDetails(command: Command, guildLang: La
       { name: t034(guildLang), value: t035(creationDate, lastUpdateDate, guildLang) },
     ],
     color: message.member!.displayHexColor
-  }) 
-  command
+  });
+
+  command.description ? embed.setDescription(command.description[guildLang]) : null;
+  
+  sender(message, embed, 'cr');
 };
