@@ -4,6 +4,9 @@ import { EError } from './errors/EError';
 import { Event, EventName } from './Event';
 
 export type Langs = 'pt-br' | 'en-us';
+
+export const langsArr: Langs[] = ['en-us', 'pt-br'];
+
 export interface NewClientConfig {
   lang?: Langs;
   defaultPrefix?: string;
