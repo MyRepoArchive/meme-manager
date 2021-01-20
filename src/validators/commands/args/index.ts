@@ -10,6 +10,7 @@ import { commandArgumentValidator } from "./command";
 import { emojiArgumentValidator } from "./emoji";
 import { eventArgumentValidator } from "./event";
 import { guildArgumentValidator } from "./guild";
+import { langArgumentValidator } from "./lang";
 import { memberArgumentValidator } from "./member";
 import { messageArgumentValidator } from "./message";
 import { newsChannelArgumentValidator } from "./newsChannel";
@@ -54,7 +55,8 @@ export async function validateArgs(args: CommandArgs | null, messageArgs: string
     'textChannel': textChannelArgumentValidator,
     'time': timeArgumentValidator,
     'user': userArgumentValidator,
-    'voiceChannel': voiceChannelArgumentValidator
+    'voiceChannel': voiceChannelArgumentValidator,
+    'lang': langArgumentValidator
   };
 
   let index = 0;

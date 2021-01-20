@@ -37,6 +37,7 @@ export interface CommandArgsTypes {
   'event': Event<'discord_client', EventName<'discord_client'>> | null;
   'user': User | null;
   'message': Message | null;
+  'lang': Langs | null;
 };
 
 export type CommandDescription = {
