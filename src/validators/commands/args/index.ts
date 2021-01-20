@@ -4,25 +4,8 @@ import { EError } from "../../../structures/errors/EError";
 import { ValidateErrorMessages } from "../../../structures/errors/ValidateError";
 import { Langs, NewClient } from "../../../structures/NewClient";
 import { t014, t015, t016, t017, t018, t019, t020, t021, t022 } from "../../../utils/texts";
-import { categoryChannelArgumentValidator } from "./categoryChannel";
-import { channelArgumentValidator } from "./channel";
-import { commandArgumentValidator } from "./command";
-import { emojiArgumentValidator } from "./emoji";
-import { eventArgumentValidator } from "./event";
-import { guildArgumentValidator } from "./guild";
-import { langArgumentValidator } from "./lang";
-import { memberArgumentValidator } from "./member";
-import { messageArgumentValidator } from "./message";
-import { newsChannelArgumentValidator } from "./newsChannel";
-import { numberArgumentValidator } from "./number";
-import { roleArgumentValidator } from "./role";
-import { snowflakeArgumentValidator } from "./snowflake";
-import { storeChannelArgumentValidator } from "./storeChannel";
-import { stringArgumentValidator } from "./string";
-import { textChannelArgumentValidator } from "./textChannel";
-import { timeArgumentValidator } from "./time";
-import { userArgumentValidator } from "./user";
-import { voiceChannelArgumentValidator } from "./voiceChannel";
+import { preArgValidator } from "./preArgValidator";
+
 
 export interface ValidatorData extends CommandArg {
   key: string;
@@ -37,33 +20,11 @@ export async function validateArgs(args: CommandArgs | null, messageArgs: string
 
   processed_args = {};
 
-  const typesValidators: { [key in keyof CommandArgsTypes]: (data: ValidatorData) => Promise<CommandArgsTypes[key]> } = {
-    'categoryChannel': categoryChannelArgumentValidator,
-    'channel': channelArgumentValidator,
-    'command': commandArgumentValidator,
-    'emoji': emojiArgumentValidator,
-    'event': eventArgumentValidator,
-    'guild': guildArgumentValidator,
-    'member': memberArgumentValidator,
-    'message': messageArgumentValidator,
-    'newsChannel': newsChannelArgumentValidator,
-    'number': numberArgumentValidator,
-    'role': roleArgumentValidator,
-    'snowflake': snowflakeArgumentValidator,
-    'storeChannel': storeChannelArgumentValidator,
-    'string': stringArgumentValidator,
-    'textChannel': textChannelArgumentValidator,
-    'time': timeArgumentValidator,
-    'user': userArgumentValidator,
-    'voiceChannel': voiceChannelArgumentValidator,
-    'lang': langArgumentValidator
-  };
-
   let index = 0;
   for (const [key, value] of Object.entries(args)) {
     try {
       const data: ValidatorData = { ...value, key, index, args: messageArgs, message, client };
-      processed_args[key] = await typesValidators[value.type](data);
+      processed_args[key] = await preArgValidator(value.type, data);
     } catch (error) {
       const argumentIndex = value.joinSpace ? `${index + 1}...` : index + 1
 

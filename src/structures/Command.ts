@@ -121,6 +121,7 @@ export interface CommandArg {
   cut?: boolean;
   thisGuild?: boolean;
   mentionPosition?: number;
+  caseInsensitive?: boolean;
 };
 
 export type CommandArgs = {

@@ -329,7 +329,7 @@ export function t035(creationDate: string, lastUpdateDate: string, lang: Langs =
 export function t036(prefix: string, lang: Langs = client.lang) {
   switch (lang) {
     case 'en-us':
-      return `You can also use ${prefix} help <command> to display detailed information about a command!`;
+      return `You can also use ${prefix}help <command> to display detailed information about a command!`;
     case 'pt-br':
       return `Você também pode usar ${prefix}help <command> para exibir informações detalhadas de um comando!`;
   };
@@ -368,5 +368,32 @@ export function t040(lang: Langs = client.lang) {
       return `There was an error when setting a new prefix on a server!`;
     case 'pt-br':
       return `Houve um erro ao setar um novo prefixo em um servidor!`;
+  };
+};
+
+export function t041(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There was an error when setting a new language on the server. Try again later!`;
+    case 'pt-br':
+      return `Houve um erro ao setar uma nova linguagem no servidor. Tente novamente mais tarde!`;
+  };
+};
+
+export function t042(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There was an error when setting a new language on a server!`;
+    case 'pt-br':
+      return `Houve um erro ao setar uma nova linguagem em um servidor!`;
+  };
+};
+
+export function t043(newLang: Langs, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `The bot will now respond in the \`${newLang}\` language within this server!`;
+    case 'pt-br':
+      return `O bot agora responderá na língua \`${newLang}\` dentro deste servidor!`;
   };
 };

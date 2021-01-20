@@ -46,7 +46,11 @@ const run: CommandRun = ({ prefix, message, guildLang, client }, args) => {
 
   if (prefix === newPrefix) return message.channel.send(t038(newPrefix)).catch(() => message.react('✅').catch(() => {}));
 
-  Guild.updateOne({ guild_id: message.guild!.id }, { prefix: newPrefix }).then(() => {
+  Guild.updateOne(
+    { guild_id: message.guild!.id },
+    { prefix: newPrefix },
+    { new: true, useFindAndModify: false }
+  ).then(() => {
     message.channel.send(t038(newPrefix)).catch(() => message.react('✅').catch(() => {}));
   }, e => {
     sender(message, t039(guildLang), 'cd').catch(() => message.react('❌').catch(() => {}));
