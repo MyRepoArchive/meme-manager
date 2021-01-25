@@ -1,3 +1,4 @@
+import { Snowflake } from "discord.js";
 import { model, Schema } from "mongoose";
 import { client } from "../config/instaceClient";
 import { Langs } from "../structures/NewClient";
@@ -23,6 +24,14 @@ const guildSchema = new Schema({
   },
   memes_channel: {
     type: String
+  },
+  meme_role: {
+    type: String
+  },
+  memes: {
+    type: [{ message_id: { type: String, index: true }, votes: Number }],
+    required: true,
+    default: []
   }
 });
 
@@ -33,6 +42,11 @@ export interface IGuild {
   prefix?: string;
   lang?: Langs;
   memes_channel?: string;
+  meme_role?: string;
+  memes?: {
+    message_id: Snowflake;
+    votes: number;
+  }[];
 };
 
 export interface IGuildDb<T = any> extends IGuild {
@@ -42,7 +56,12 @@ export interface IGuildDb<T = any> extends IGuild {
   prefix: string; 
   lang: Langs;
   memes_channel?: string;
-}
+  meme_role?: string;
+  memes: {
+    message_id: Snowflake;
+    votes: number;
+  }[];
+};
 
 export class Guild extends _Guild {
   constructor(params: IGuild) {

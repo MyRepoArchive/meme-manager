@@ -1,15 +1,9 @@
 import { EventInstance, EventName } from "../structures/Event";
 import { Langs, NewClient } from "../structures/NewClient";
 import { client } from "../config/instaceClient";
-import { Message, TextChannel } from "discord.js";
+import { Message, Role, TextChannel } from "discord.js";
 import { Command, CommandArgsTypes } from "../structures/Command";
 import ms from "ms";
-
-/* Inicios de funcoes e seus significados; */
-// t: Textos que vão para terminal!
-// c: Textos que vão para o chat!
-// em: Mensagens de erro!
-// dm: Mensagens que irao para a DM de um usuário/membro!
 
 export function t001(eventInstance: EventInstance, eventName: EventName<EventInstance>, lang: Langs = client.lang) {
   switch (lang) {
@@ -395,5 +389,59 @@ export function t043(newLang: Langs, lang: Langs = client.lang) {
       return `The bot will now respond in the \`${newLang}\` language within this server!`;
     case 'pt-br':
       return `O bot agora responderá na língua \`${newLang}\` dentro deste servidor!`;
+  };
+};
+
+export function t044(memeRole: Role, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `The role ${memeRole} has been successfully set as the role of moderating memes`;
+    case 'pt-br':
+      return `O cargo ${memeRole} foi setado com sucesso como o cargo de moderação de memes`;
+  };
+};
+
+export function t045(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There was an error when setting the post of moderating memes, try again later!`;
+    case 'pt-br':
+      return `Houve um erro ao setar o cargo de moderação de memes, tente novamente mais tarde!`;
+  };
+};
+
+export function t046(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There was an error in setting a meme moderation post!`;
+    case 'pt-br':
+      return `Houve um erro ao setar um cargo de moderação de memes!`;
+  };
+};
+
+export function t047(guildName: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `I need permission to delete messages on the channel defined for memes on the ${guildName} server!`;
+    case 'pt-br':
+      return `Eu preciso da permissão para deletar mensagens no canal definido para memes no servidor ${guildName}!`;
+  };
+};
+
+export function t048(guildName: string, lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `I need permission to add and remove reactions in the channel defined for memes on the server ${guildName}!`;
+    case 'pt-br':
+      return `Eu preciso da permissão para adicionar e  remover reações no canal definido para memes no servidor ${guildName}!`;
+  };
+};
+
+export function t049(lang: Langs = client.lang) {
+  switch (lang) {
+    case 'en-us':
+      return `There are no memes on this guild yet!`;
+    case 'pt-br':
+      return `Ainda não há memes neste servidor!`;
   };
 };

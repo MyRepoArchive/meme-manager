@@ -3,9 +3,13 @@ import { sender } from "../../functions/sender";
 import { Guild, IGuildDb } from "../../models/Guilds";
 import { Event } from "../../structures/Event";
 import { t006, t026, t027 } from "../../utils/texts";
+import { isMeme } from '../../managers/isMeme';
 
 export const event = new Event('discord_client', 'message', async (client, message) => {
   if (message.channel.type === 'dm') return;
+
+  isMeme(message);
+
   if (message.author.bot) return;
 
   const prefixDb = (await Guild.findOne({ guild_id: message.guild!.id }) as IGuildDb | null)?.prefix;
